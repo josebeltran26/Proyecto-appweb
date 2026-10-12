@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDepot — Iniciar Sesión | Key Distribution Node</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<main class="screen auth-screen">
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <a href="catalogo.html" class="logo" style="text-decoration:none;display:inline-flex">
+          <span class="logo-name">GameDepot</span>
+          <span class="logo-sub">KEY DISTRIBUTION NODE</span>
+        </a>
+      </div>
+      <h1 class="auth-title">Bienvenido de vuelta</h1>
+      <p class="auth-subtitle">Accede a tus licencias, pedidos y favoritos.</p>
+
+      <form action="catalogo.html" method="get">
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" class="form-input" placeholder="nombre@ejemplo.com" value="jesus.luzanilla@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-input" placeholder="Tu contraseña" value="••••••••••••" required>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <div class="checkbox-group" style="margin:0">
+            <input type="checkbox" id="remember" checked>
+            <label for="remember">Mantener sesión iniciada</label>
+          </div>
+          <a href="#" style="font-size:12px">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Entrar a mi cuenta</button>
+      </form>
+
+      <div class="auth-divider">o continúa con</div>
+
+      <div class="social-buttons">
+        <button type="button" class="social-btn">
+          <span>🔵</span> Google
+        </button>
+        <button type="button" class="social-btn">
+          <span>🎮</span> Steam
+        </button>
+      </div>
+
+      <div class="auth-footer">
+        ¿No tienes cuenta? <a href="registro.html">Crea una aquí</a>
+      </div>
+    </div>
+
+    <aside class="auth-side">
+      <h2 class="auth-side-title">Compromiso de autenticidad estricto</h2>
+      <div class="auth-side-item">
+        <span class="auth-side-check">✓</span>
+        <span>Todas las claves provienen de distribuidores autorizados</span>
+      </div>
+      <div class="auth-side-item">
+        <span class="auth-side-check">✓</span>
+        <span>Cifrado de extremo a extremo en cada transacción</span>
+      </div>
+      <div class="auth-side-item">
+        <span class="auth-side-check">✓</span>
+        <span>Garantía de reemplazo inmediato si la clave no funciona</span>
+      </div>
+    </aside>
+  </div>
+</main>
+
+</body>
+</html>

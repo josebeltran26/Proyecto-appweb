@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDepot — Registro | Key Distribution Node</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<main class="screen auth-screen">
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <a href="catalogo.html" class="logo" style="text-decoration:none;display:inline-flex">
+          <span class="logo-name">GameDepot</span>
+          <span class="logo-sub">KEY DISTRIBUTION NODE</span>
+        </a>
+      </div>
+      <h1 class="auth-title">Crea tu cuenta</h1>
+      <p class="auth-subtitle">Empieza a canjear claves verificadas en minutos.</p>
+
+      <form action="catalogo.html" method="get">
+        <div class="form-group">
+          <label class="form-label">Nombre completo</label>
+          <input type="text" class="form-input" placeholder="Tu nombre completo" value="Jesus Luzanilla" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" class="form-input" placeholder="nombre@ejemplo.com" value="jesus.luzanilla@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">País / Región</label>
+          <select class="form-select">
+            <option value="">Selecciona tu país</option>
+            <option selected>México</option>
+            <option>España</option>
+            <option>Argentina</option>
+            <option>Colombia</option>
+            <option>Estados Unidos</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Contraseña</label>
+            <input type="password" class="form-input" placeholder="Mín. 8 caracteres" value="••••••••••••" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmar contraseña</label>
+            <input type="password" class="form-input" placeholder="Repite tu contraseña" value="••••••••••••" required>
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="terms" checked required>
+          <label for="terms">Acepto los <a href="#">Términos de Servicio</a> y la <a href="#">Política de Privacidad</a> de GameDepot.</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Crear cuenta</button>
+      </form>
+
+      <div class="auth-footer">
+        ¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a>
+      </div>
+    </div>
+
+    <aside class="auth-side">
+      <h2 class="auth-side-title">Tu bóveda de juegos, siempre contigo.</h2>
+      <div class="auth-side-item">
+        <span class="auth-side-check">✓</span>
+        <span>Claves oficiales entregadas en menos de 5 segundos</span>
+      </div>
+      <div class="auth-side-item">
+        <span class="auth-side-check">✓</span>
+        <span>Bóveda cifrada con autenticación en dos fases</span>
+      </div>
+      <div class="auth-side-item">
+        <span class="auth-side-check">✓</span>
+        <span>Soporte 24/7 y reemplazo al instante</span>
+      </div>
+    </aside>
+  </div>
+</main>
+
+</body>
+</html>

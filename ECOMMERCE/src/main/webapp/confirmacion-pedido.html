@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDepot — Confirmación de Pedido</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="header-row-1">
+    <a href="catalogo.html" class="logo">
+      <span class="logo-name">GameDepot</span>
+      <span class="logo-sub">KEY DISTRIBUTION NODE</span>
+    </a>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar claves de Steam, Xbox, Epic, PSN...">
+    </div>
+    <div class="user-area">
+      <div class="balance-badge">
+        <span class="balance-label">SALDO</span>
+        <span class="balance-amount">$42.50 MXN</span>
+      </div>
+      <a href="carrito.html" class="cart-icon" title="Ver carrito">
+        🛒
+        <span class="cart-badge">2</span>
+      </a>
+      <a href="perfil.html" class="user-profile">
+        <div class="user-avatar">JL</div>
+        <div class="user-info-text">
+          <span class="user-name">Jesus Luzanilla</span>
+          <span class="user-email">jesus.luzanilla@example.com</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <nav class="platform-nav">
+    <a href="catalogo.html" class="platform-link active">STEAM</a>
+    <a href="catalogo.html" class="platform-link">XBOX</a>
+    <a href="catalogo.html" class="platform-link">PLAYSTATION</a>
+    <a href="catalogo.html" class="platform-link">EPIC</a>
+    <a href="catalogo.html" class="platform-link">GOG</a>
+    <a href="catalogo.html" class="platform-link">NINTENDO</a>
+  </nav>
+</header>
+
+<main class="screen">
+  <div class="page-section" style="padding-bottom:0">
+    <div class="stepper">
+      <div class="step completed">
+        <span class="step-number">✓</span>
+        <span class="step-label">Datos y entrega</span>
+      </div>
+      <div class="step-connector done"></div>
+      <div class="step completed">
+        <span class="step-number">✓</span>
+        <span class="step-label">Pago</span>
+      </div>
+      <div class="step-connector done"></div>
+      <div class="step active">
+        <span class="step-number">3</span>
+        <span class="step-label">Confirmación</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirmation-wrapper">
+    <div class="confirmation-banner">
+      <div class="confirmation-icon">✅</div>
+      <h1 class="confirmation-title">¡Pago confirmado!</h1>
+      <p class="confirmation-order">Pedido <strong>GD-849201</strong> · 08 oct 2026</p>
+      <p class="confirmation-email">Copia enviada a jesus.luzanilla@example.com</p>
+    </div>
+
+    <div class="keys-section-title">
+      🔑 Tus claves digitales
+      <span class="keys-section-badge">Cifrado SHA-256</span>
+    </div>
+
+    <article class="key-card">
+      <div class="key-card-header">
+        <span class="key-card-platform steam">STEAM KEY</span>
+        <span class="key-card-region">Global MXN</span>
+      </div>
+      <h3 class="key-card-game">Apex Phantom Elite: Zero</h3>
+      <div class="key-code-box">
+        <span class="key-code">APEX-9821-XFK9-4412</span>
+        <div class="key-actions">
+          <button type="button" class="btn btn-secondary btn-sm">📋 Copiar clave</button>
+          <a href="https://store.steampowered.com/account/registerkey" target="_blank" class="btn btn-primary btn-sm">Canjear en Steam →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="key-card">
+      <div class="key-card-header">
+        <span class="key-card-platform epic">EPIC GAMES KEY</span>
+        <span class="key-card-region">Global MXN</span>
+      </div>
+      <h3 class="key-card-game">Cyberpunk Odyssey 2077</h3>
+      <div class="key-code-box">
+        <span class="key-code">CYBER-2077-O78X-99B2</span>
+        <div class="key-actions">
+          <button type="button" class="btn btn-secondary btn-sm">📋 Copiar clave</button>
+          <a href="https://store.epicgames.com/redeem" target="_blank" class="btn btn-primary btn-sm">Canjear en Epic Games →</a>
+        </div>
+      </div>
+    </article>
+
+    <div class="confirmation-summary">
+      <h3 class="summary-title">Resumen de compra</h3>
+      <div class="summary-row">
+        <span>Método de pago</span>
+        <span>Tarjeta Visa (...8892)</span>
+      </div>
+      <div class="summary-row">
+        <span>Apex Phantom Elite: Zero</span>
+        <span>$29.99 MXN</span>
+      </div>
+      <div class="summary-row">
+        <span>Cyberpunk Odyssey 2077</span>
+        <span>$38.51 MXN</span>
+      </div>
+      <div class="summary-row discount">
+        <span>Ahorro en ofertas</span>
+        <span>-$34.48 MXN</span>
+      </div>
+      <div class="summary-row coupon">
+        <span>Cupón GAMER10</span>
+        <span>-$5.00 MXN</span>
+      </div>
+      <div class="summary-total">
+        <span>Total pagado</span>
+        <span>$63.50 MXN</span>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:20px">
+        <a href="perfil.html" class="btn btn-primary">🔐 Ver en mi Bóveda</a>
+        <a href="catalogo.html" class="btn btn-secondary">🛒 Seguir comprando</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

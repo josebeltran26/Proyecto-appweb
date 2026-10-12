@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDepot — Carrito de Compras</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="header-row-1">
+    <a href="catalogo.html" class="logo">
+      <span class="logo-name">GameDepot</span>
+      <span class="logo-sub">KEY DISTRIBUTION NODE</span>
+    </a>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar claves de Steam, Xbox, Epic, PSN...">
+    </div>
+    <div class="user-area">
+      <div class="balance-badge">
+        <span class="balance-label">SALDO</span>
+        <span class="balance-amount">$42.50 MXN</span>
+      </div>
+      <a href="carrito.html" class="cart-icon" title="Ver carrito">
+        🛒
+        <span class="cart-badge">2</span>
+      </a>
+      <a href="perfil.html" class="user-profile">
+        <div class="user-avatar">JL</div>
+        <div class="user-info-text">
+          <span class="user-name">Jesus Luzanilla</span>
+          <span class="user-email">jesus.luzanilla@example.com</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <nav class="platform-nav">
+    <a href="catalogo.html" class="platform-link active">STEAM</a>
+    <a href="catalogo.html" class="platform-link">XBOX</a>
+    <a href="catalogo.html" class="platform-link">PLAYSTATION</a>
+    <a href="catalogo.html" class="platform-link">EPIC</a>
+    <a href="catalogo.html" class="platform-link">GOG</a>
+    <a href="catalogo.html" class="platform-link">NINTENDO</a>
+  </nav>
+</header>
+
+<main class="screen">
+  <div class="cart-layout">
+    <section class="cart-items">
+      <h1 class="cart-title">Tu carrito <span class="text-secondary" style="font-size:14px;font-weight:400">(2 artículos · Entrega instantánea de claves)</span></h1>
+
+      <article class="cart-item">
+        <div class="cart-item-img">
+          <div class="placeholder-text" style="font-size:10px;text-align:center">Apex Phantom<br>Elite: Zero</div>
+        </div>
+        <div class="cart-item-info">
+          <h3 class="cart-item-title"><a href="detalle-producto.html" style="color:inherit">Apex Phantom Elite: Zero</a></h3>
+          <p class="cart-item-meta">Steam Key · Global</p>
+          <div class="cart-item-pricing">
+            <span class="badge badge-discount">-30%</span>
+            <span class="price-original">$42.99 MXN</span>
+            <span class="price-current" style="font-size:16px">$29.99 MXN</span>
+          </div>
+        </div>
+        <div class="cart-item-actions">
+          <button type="button" class="btn btn-ghost btn-sm text-danger">✕ Quitar</button>
+        </div>
+      </article>
+
+      <article class="cart-item">
+        <div class="cart-item-img">
+          <div class="placeholder-text" style="font-size:10px;text-align:center">Cyberpunk<br>Odyssey 2077</div>
+        </div>
+        <div class="cart-item-info">
+          <h3 class="cart-item-title"><a href="detalle-producto.html" style="color:inherit">Cyberpunk Odyssey 2077</a></h3>
+          <p class="cart-item-meta">Epic Games · Global</p>
+          <div class="cart-item-pricing">
+            <span class="badge badge-discount">-35%</span>
+            <span class="price-original">$59.99 MXN</span>
+            <span class="price-current" style="font-size:16px">$38.51 MXN</span>
+          </div>
+        </div>
+        <div class="cart-item-actions">
+          <button type="button" class="btn btn-ghost btn-sm text-danger">✕ Quitar</button>
+        </div>
+      </article>
+    </section>
+
+    <aside class="cart-summary">
+      <div class="cart-summary-card">
+        <h2 class="summary-title">Resumen del pedido</h2>
+
+        <div class="summary-row">
+          <span>Precio de lista</span>
+          <span>$102.98 MXN</span>
+        </div>
+        <div class="summary-row discount">
+          <span>Ahorro en ofertas</span>
+          <span>-$34.48 MXN</span>
+        </div>
+        <div class="summary-row coupon">
+          <span>
+            Cupón <span class="coupon-tag">GAMER10 <span class="chip-remove" style="font-size:12px;cursor:pointer">×</span></span>
+          </span>
+          <span>-$5.00 MXN</span>
+        </div>
+        <div class="summary-row">
+          <span>Comisión de pago</span>
+          <span>$0.00 MXN</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>$63.50 MXN</span>
+        </div>
+
+        <a href="checkout-paso1.html" class="btn btn-primary btn-block btn-lg mt-2">Proceder al pago</a>
+
+        <a href="catalogo.html" class="cart-continue">← Seguir comprando</a>
+
+        <div class="cart-security">
+          🔒 Cifrado TLS 1.3 · PCI-DSS Nivel 1<br>
+          Tus datos de pago están 100% protegidos.
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+</body>
+</html>

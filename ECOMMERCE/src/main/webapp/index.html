@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDepot — Tienda Virtual de Videojuegos | Key Distribution Node</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="header-row-1">
+    <a href="index.html" class="logo">
+      <span class="logo-name">GameDepot</span>
+      <span class="logo-sub">KEY DISTRIBUTION NODE</span>
+    </a>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar claves de Steam, Xbox, Epic, PSN...">
+    </div>
+    <div class="user-area">
+      <div class="balance-badge">
+        <span class="balance-label">SALDO</span>
+        <span class="balance-amount">$42.50 MXN</span>
+      </div>
+      <a href="carrito.html" class="cart-icon" title="Ver carrito">
+        🛒
+        <span class="cart-badge">2</span>
+      </a>
+      <a href="perfil.html" class="user-profile">
+        <div class="user-avatar">JL</div>
+        <div class="user-info-text">
+          <span class="user-name">Jesus Luzanilla</span>
+          <span class="user-email">jesus.luzanilla@example.com</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <nav class="platform-nav">
+    <a href="catalogo.html" class="platform-link active">STEAM</a>
+    <a href="catalogo.html" class="platform-link">XBOX</a>
+    <a href="catalogo.html" class="platform-link">PLAYSTATION</a>
+    <a href="catalogo.html" class="platform-link">EPIC</a>
+    <a href="catalogo.html" class="platform-link">GOG</a>
+    <a href="catalogo.html" class="platform-link">NINTENDO</a>
+  </nav>
+</header>
+
+<main class="screen">
+  <div class="catalog-layout">
+    <aside class="filter-sidebar">
+      <div class="filter-card">
+        <h3 class="filter-title">Plataforma</h3>
+        <label class="filter-option"><input type="checkbox" checked> Steam</label>
+        <label class="filter-option"><input type="checkbox"> PlayStation 5</label>
+        <label class="filter-option"><input type="checkbox"> Xbox Series X|S</label>
+        <label class="filter-option"><input type="checkbox"> Epic Games</label>
+        <label class="filter-option"><input type="checkbox"> GOG DRM-Free</label>
+        <label class="filter-option"><input type="checkbox"> EA</label>
+        <label class="filter-option"><input type="checkbox"> Ubisoft</label>
+      </div>
+
+      <div class="filter-card">
+        <h3 class="filter-title">Rango</h3>
+        <div class="range-group">
+          <div class="range-value">Precio maximo: $80 MXN</div>
+          <input type="range" min="0" max="120" value="80">
+        </div>
+      </div>
+
+      <div class="filter-card">
+        <h3 class="filter-title">Descuento mínimo</h3>
+        <label class="filter-option"><input type="radio" name="discount" checked> Cualquiera</label>
+        <label class="filter-option"><input type="radio" name="discount"> 25% o mas</label>
+        <label class="filter-option"><input type="radio" name="discount"> 40% o mas</label>
+        <label class="filter-option"><input type="radio" name="discount"> 50% o mas</label>
+      </div>
+    </aside>
+
+    <section class="catalog-main">
+      <nav class="breadcrumb">
+        <a href="index.html">Inicio</a> <span>/</span> <span>Catálogo</span>
+      </nav>
+
+      <div class="results-bar">
+        <span class="results-count">9 resultados</span>
+      </div>
+
+      <div class="chips-bar">
+        <span class="chip">Precio Maximo $80 MXN <span class="chip-remove">×</span></span>
+        <span class="chip">Descuento &gt; 50% <span class="chip-remove">×</span></span>
+        <span class="chip">Global Key (Sin bloqueo) <span class="chip-remove">×</span></span>
+        <span class="chip">Deluxe &amp; Ultimate Edition <span class="chip-remove">×</span></span>
+        <span class="chip">Verificado <span class="chip-remove">×</span></span>
+      </div>
+
+      <div class="game-grid">
+        <article class="game-card">
+          <div class="game-card-img">
+            <span class="badge badge-discount">-35%</span>
+            <div class="placeholder-text">Soulfire Rising:<br>Lords of Ruin</div>
+          </div>
+          <div class="game-card-body">
+            <div class="game-card-tags">
+              <span class="tag">CLAVE VERIFICADA</span>
+            </div>
+            <h3 class="game-card-title"><a href="detalle-producto.html" style="color:inherit">Soulfire Rising: Lords of Ruin</a></h3>
+            <p class="game-card-platform">PS5 / Xbox Series</p>
+            <p class="game-card-stock">Stock: 98 uds</p>
+            <div class="game-card-pricing">
+              <span class="price-original">$64.99 MXN</span>
+              <span class="price-current">$41.99 MXN</span>
+            </div>
+            <a href="detalle-producto.html" class="btn btn-primary btn-block">Adquirir</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="game-card-img">
+            <span class="badge badge-discount">-40%</span>
+            <div class="placeholder-text">Galactic Front:<br>Phantom Protocol</div>
+          </div>
+          <div class="game-card-body">
+            <div class="game-card-tags">
+              <span class="tag">PUBLISHER DIRECT</span>
+            </div>
+            <h3 class="game-card-title"><a href="detalle-producto.html" style="color:inherit">Galactic Front: Phantom Protocol</a></h3>
+            <p class="game-card-platform">Steam PC</p>
+            <p class="game-card-stock">Stock: 240 uds</p>
+            <div class="game-card-pricing">
+              <span class="price-original">$49.99 MXN</span>
+              <span class="price-current">$29.99 MXN</span>
+            </div>
+            <a href="detalle-producto.html" class="btn btn-primary btn-block">Adquirir</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="game-card-img">
+            <span class="badge badge-discount">-25%</span>
+            <div class="placeholder-text">Quantum Sector:<br>Vanguard Ops</div>
+          </div>
+          <div class="game-card-body">
+            <div class="game-card-tags">
+              <span class="tag">GLOBAL DRM</span>
+              <span class="tag">UNREAL ENGINE 5</span>
+            </div>
+            <h3 class="game-card-title"><a href="detalle-producto.html" style="color:inherit">Quantum Sector: Vanguard Ops</a></h3>
+            <p class="game-card-platform">Epic Games / PC</p>
+            <p class="game-card-stock">Stock: 150 uds</p>
+            <div class="game-card-pricing">
+              <span class="price-original">$39.99 MXN</span>
+              <span class="price-current">$29.99 MXN</span>
+            </div>
+            <a href="detalle-producto.html" class="btn btn-primary btn-block">Adquirir</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="game-card-img">
+            <span class="badge badge-discount">-60%</span>
+            <div class="placeholder-text">Dark Horizon:<br>Abyss Chronicle</div>
+          </div>
+          <div class="game-card-body">
+            <div class="game-card-tags">
+              <span class="tag">CLAVE UNIVERSAL</span>
+              <span class="tag">Sin DRM</span>
+            </div>
+            <h3 class="game-card-title"><a href="detalle-producto.html" style="color:inherit">Dark Horizon: Abyss Chronicle</a></h3>
+            <p class="game-card-platform">GOG DRM-Free</p>
+            <p class="game-card-stock">Stock: 52 uds</p>
+            <div class="game-card-pricing">
+              <span class="price-original">$49.99 MXN</span>
+              <span class="price-highlight">$19.99 MXN</span>
+            </div>
+            <a href="detalle-producto.html" class="btn btn-primary btn-block">Adquirir</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="game-card-img">
+            <span class="badge badge-discount">-25%</span>
+            <div class="placeholder-text">Cyberpunk 2077:<br>Phantom Liberty</div>
+          </div>
+          <div class="game-card-body">
+            <div class="game-card-tags">
+              <span class="tag">CLAVE VERIFICADA</span>
+              <span class="tag">Steam</span>
+            </div>
+            <h3 class="game-card-title"><a href="detalle-producto.html" style="color:inherit">Cyberpunk 2077: Phantom Liberty</a></h3>
+            <p class="game-card-platform">Steam PC · Global Key</p>
+            <p class="game-card-stock">Stock: 14 uds</p>
+            <div class="game-card-pricing">
+              <span class="price-original">$39.99 MXN</span>
+              <span class="price-current">$29.99 MXN</span>
+            </div>
+            <a href="detalle-producto.html" class="btn btn-primary btn-block">Adquirir</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="game-card-img">
+            <span class="badge badge-discount">-30%</span>
+            <div class="placeholder-text">Apex Phantom<br>Elite: Zero</div>
+          </div>
+          <div class="game-card-body">
+            <div class="game-card-tags">
+              <span class="tag">CLAVE VERIFICADA</span>
+            </div>
+            <h3 class="game-card-title"><a href="detalle-producto.html" style="color:inherit">Apex Phantom Elite: Zero</a></h3>
+            <p class="game-card-platform">Steam Key · Global</p>
+            <p class="game-card-stock">Stock: 64 uds</p>
+            <div class="game-card-pricing">
+              <span class="price-original">$42.99 MXN</span>
+              <span class="price-current">$29.99 MXN</span>
+            </div>
+            <a href="carrito.html" class="btn btn-primary btn-block">Adquirir</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</main>
+
+</body>
+</html>

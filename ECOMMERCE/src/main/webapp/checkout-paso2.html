@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDepot — Checkout (Paso 2: Método de Pago)</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="header-row-1">
+    <a href="catalogo.html" class="logo">
+      <span class="logo-name">GameDepot</span>
+      <span class="logo-sub">KEY DISTRIBUTION NODE</span>
+    </a>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar claves de Steam, Xbox, Epic, PSN...">
+    </div>
+    <div class="user-area">
+      <div class="balance-badge">
+        <span class="balance-label">SALDO</span>
+        <span class="balance-amount">$42.50 MXN</span>
+      </div>
+      <a href="carrito.html" class="cart-icon" title="Ver carrito">
+        🛒
+        <span class="cart-badge">2</span>
+      </a>
+      <a href="perfil.html" class="user-profile">
+        <div class="user-avatar">JL</div>
+        <div class="user-info-text">
+          <span class="user-name">Jesus Luzanilla</span>
+          <span class="user-email">jesus.luzanilla@example.com</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <nav class="platform-nav">
+    <a href="catalogo.html" class="platform-link active">STEAM</a>
+    <a href="catalogo.html" class="platform-link">XBOX</a>
+    <a href="catalogo.html" class="platform-link">PLAYSTATION</a>
+    <a href="catalogo.html" class="platform-link">EPIC</a>
+    <a href="catalogo.html" class="platform-link">GOG</a>
+    <a href="catalogo.html" class="platform-link">NINTENDO</a>
+  </nav>
+</header>
+
+<main class="screen">
+  <div class="page-section" style="padding-bottom:0">
+    <div class="stepper">
+      <div class="step completed">
+        <span class="step-number">✓</span>
+        <span class="step-label">Datos y entrega</span>
+      </div>
+      <div class="step-connector done"></div>
+      <div class="step active">
+        <span class="step-number">2</span>
+        <span class="step-label">Método de pago</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <span class="step-number">3</span>
+        <span class="step-label">Confirmación</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-layout">
+    <div class="checkout-main">
+      <div class="payment-tabs">
+        <div class="payment-tab active">
+          💳 Tarjeta de crédito / débito
+          <div class="payment-tab-sub">Visa · Mastercard · Amex</div>
+        </div>
+        <div class="payment-tab">
+          🅿️ PayPal Instant
+          <div class="payment-tab-sub">Pago seguro</div>
+        </div>
+        <div class="payment-tab">
+          📱 Apple Pay / Google Pay
+          <div class="payment-tab-sub">Pago rápido</div>
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <h3 class="detail-block-title">Datos de la tarjeta</h3>
+        <div class="form-group">
+          <label class="form-label">Número de tarjeta</label>
+          <input type="text" class="form-input" placeholder="•••• •••• •••• ••••" value="4532 •••• •••• 8892">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Titular de la tarjeta</label>
+          <input type="text" class="form-input" value="JESUS LUZANILLA">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Vencimiento</label>
+            <input type="text" class="form-input" placeholder="MM / AA" value="09 / 28">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV / CVC</label>
+            <input type="text" class="form-input" placeholder="•••" value="•••">
+          </div>
+        </div>
+      </div>
+
+      <a href="confirmacion-pedido.html" class="btn btn-success btn-block btn-lg mt-2">🔒 Pagar $63.50 MXN</a>
+
+      <div class="cart-security mt-2">
+        🔒 Cifrado TLS 1.3 · PCI-DSS Nivel 1<br>
+        Tu información financiera nunca se almacena en nuestros servidores.
+      </div>
+    </div>
+
+    <aside class="checkout-sidebar">
+      <div class="cart-summary-card">
+        <h3 class="summary-title">Tu pedido</h3>
+
+        <div style="margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-2);margin-bottom:6px">
+            <span>Apex Phantom Elite: Zero</span>
+            <span>$29.99 MXN</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-2)">
+            <span>Cyberpunk Odyssey 2077</span>
+            <span>$38.51 MXN</span>
+          </div>
+        </div>
+
+        <div class="summary-row discount">
+          <span>Ahorro total</span>
+          <span>-$34.48 MXN</span>
+        </div>
+        <div class="summary-row coupon">
+          <span>Cupón GAMER10</span>
+          <span>-$5.00 MXN</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>$63.50 MXN</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+</body>
+</html>
