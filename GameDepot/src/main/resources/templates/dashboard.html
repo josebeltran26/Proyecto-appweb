@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Dashboard')}"></head>
+<body>
+
+<div class="admin-layout">
+  <aside th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></aside>
+
+  <main class="admin-main">
+    <header th:replace="~{fragments/header :: header('Dashboard General')}"></header>
+
+    <div class="admin-body">
+      <div th:replace="~{fragments/alerts :: alerts}"></div>
+
+      <!-- KPI Metrics Grid -->
+      <div class="stat-grid">
+        <div class="stat-card" th:classappend="${ordenesPendientes > 0} ? 'warning-card' : ''">
+          <div>
+            <div class="stat-title">Órdenes Pendientes</div>
+            <div class="stat-value" th:text="${ordenesPendientes}">0</div>
+            <div class="stat-meta">Requieren atención / pago</div>
+          </div>
+          <div class="stat-accent stat-accent-warning"></div>
+        </div>
+
+        <div class="stat-card" th:classappend="${stockBajoCount > 0} ? 'alert-card' : ''">
+          <div>
+            <div class="stat-title">Variantes Stock Bajo</div>
+            <div class="stat-value" th:text="${stockBajoCount}">0</div>
+            <div class="stat-meta">&le; stock mínimo por edición</div>
+          </div>
+          <div class="stat-accent stat-accent-danger"></div>
+        </div>
+
+        <div class="stat-card">
+          <div>
+            <div class="stat-title">Títulos &amp; Variantes</div>
+            <div class="stat-value" th:text="${totalVideojuegos} + ' / ' + ${totalVariantes}">0 / 0</div>
+            <div class="stat-meta">Juegos / Ediciones (Plataforma + Formato)</div>
+          </div>
+          <div class="stat-accent stat-accent-info"></div>
+        </div>
+
+        <div class="stat-card success-card">
+          <div>
+            <div class="stat-title">Ingresos Acumulados</div>
+            <div class="stat-value" th:text="'$' + ${#numbers.formatDecimal(totalVentas, 1, 'COMMA', 2, 'POINT')}">$0.00</div>
+            <div class="stat-meta">Órdenes procesadas</div>
+          </div>
+          <div class="stat-accent stat-accent-success"></div>
+        </div>
+      </div>
+
+      <!-- Alerta Productos con Stock Bajo -->
+      <div class="table-card" th:if="${stockBajoCount > 0}">
+        <div class="table-header" style="background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.3);">
+          <div>
+            <h2 style="font-size: 15px; font-weight: 700; color: #f87171;">
+              Alerta de Existencias — Ediciones bajo el stock mínimo
+            </h2>
+            <p style="font-size: 12px; color: var(--text-2); margin-top: 2px;">
+              El stock de estas variantes ha caído por debajo de su umbral de seguridad.
+            </p>
+          </div>
+          <a th:href="@{/admin/inventario}" class="btn btn-danger btn-sm">Ir a Ajustes de Inventario</a>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Videojuego</th>
+                <th>Plataforma</th>
+                <th>Formato</th>
+                <th>Stock Actual</th>
+                <th>Stock Mínimo</th>
+                <th>Diagnóstico</th>
+                <th style="text-align: right;">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="variante : ${listaStockBajo}">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <img th:src="${variante.videojuego.imagenPrincipalUrl}" alt="Portada" class="table-thumb">
+                    <div>
+                      <div class="fw-700" style="color: var(--text-1);" th:text="${variante.videojuego.nombre}">Nombre</div>
+                      <div class="fs-xs text-muted" th:text="'SKU: ' + ${variante.sku}">SKU</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="pill pill-info" th:text="${variante.plataforma.etiqueta}">PC</span>
+                </td>
+                <td>
+                  <span class="pill" th:classappend="${variante.isDigital()} ? 'pill-purple' : 'pill-neutral'"
+                        th:text="${variante.formato.name()}">DIGITAL</span>
+                </td>
+                <td>
+                  <span class="pill pill-danger" style="font-size: 12px;">
+                    <span th:text="${variante.stock}">0</span> unidades
+                  </span>
+                </td>
+                <td th:text="${variante.stockMinimo} + ' unidades'">5 unidades</td>
+                <td>
+                  <span class="pill pill-danger">CRITICO</span>
+                </td>
+                <td style="text-align: right;">
+                  <a th:href="@{/admin/inventario}" class="btn btn-secondary btn-sm">+ Abastecer</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Órdenes Recientes -->
+      <div class="table-card">
+        <div class="table-header">
+          <div>
+            <h2 style="font-size: 16px; font-weight: 700; color: var(--text-1);">Órdenes Recientes</h2>
+            <p style="font-size: 12px; color: var(--text-3);">Últimas transacciones registradas</p>
+          </div>
+          <a th:href="@{/admin/ordenes}" class="btn btn-secondary btn-sm">Ver Todas las Órdenes &rarr;</a>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Folio</th>
+                <th>Cliente</th>
+                <th>Tipo de Pedido</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th style="text-align: right;">Detalle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:if="${#lists.isEmpty(ultimasOrdenes)}">
+                <td colspan="7" class="text-center text-muted" style="padding: 24px;">No hay órdenes registradas.</td>
+              </tr>
+              <tr th:each="orden : ${ultimasOrdenes}">
+                <td>
+                  <span class="fw-700" style="color: var(--accent);" th:text="${orden.folio}">ORD-000</span>
+                </td>
+                <td>
+                  <div class="fw-600" th:text="${orden.usuario.nombre}">Nombre</div>
+                  <div class="fs-xs text-muted" th:text="${orden.usuario.email}">email</div>
+                </td>
+                <td>
+                  <span th:if="${orden.requiereEnvio()}" class="pill pill-info">Envío Físico</span>
+                  <span th:unless="${orden.requiereEnvio()}" class="pill pill-purple">Licencia Digital</span>
+                </td>
+                <td th:text="${#temporals.format(orden.fecha, 'dd/MM/yyyy HH:mm')}">01/01/2026</td>
+                <td>
+                  <span class="fw-700 text-success" th:text="'$' + ${#numbers.formatDecimal(orden.total, 1, 'COMMA', 2, 'POINT')}">$0.00</span>
+                </td>
+                <td>
+                  <span th:if="${orden.estado.name() == 'PENDIENTE'}" class="pill pill-warning">PENDIENTE</span>
+                  <span th:if="${orden.estado.name() == 'PROCESANDO'}" class="pill pill-info">PROCESANDO</span>
+                  <span th:if="${orden.estado.name() == 'ENVIADO'}" class="pill pill-purple">ENVIADO</span>
+                  <span th:if="${orden.estado.name() == 'ENTREGADO'}" class="pill pill-success">ENTREGADO</span>
+                  <span th:if="${orden.estado.name() == 'CANCELADO'}" class="pill pill-danger">CANCELADO</span>
+                </td>
+                <td style="text-align: right;">
+                  <a th:href="@{'/admin/ordenes/' + ${orden.id}}" class="btn btn-secondary btn-sm">Inspeccionar</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

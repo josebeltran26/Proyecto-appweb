@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDepot Admin — Iniciar Sesión</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<main class="screen auth-screen">
+  <div class="auth-wrapper" style="max-width: 900px;">
+    <div class="auth-card" style="flex: 1.2;">
+      <div class="auth-logo">
+        <a th:href="@{/admin/login}" class="logo" style="text-decoration:none;display:inline-flex;">
+          <span class="logo-name">GameDepot</span>
+          <span class="logo-sub">ADMINISTRATION NODE</span>
+        </a>
+      </div>
+      <h1 class="auth-title">Panel de Control</h1>
+      <p class="auth-subtitle">Acceso exclusivo para administradores del sistema.</p>
+
+      <!-- Mensajes de Alerta -->
+      <div th:if="${errorMessage}" class="alert-box alert-error" style="margin-bottom: 20px;">
+        <span th:text="${errorMessage}">Credenciales inválidas</span>
+      </div>
+
+      <div th:if="${logoutMessage}" class="alert-box alert-success" style="margin-bottom: 20px;">
+        <span th:text="${logoutMessage}">Has cerrado sesión correctamente.</span>
+      </div>
+
+      <form th:action="@{/admin/login}" method="post">
+        <div class="form-group">
+          <label class="form-label" for="username">Correo electrónico de Administrador</label>
+          <input type="email" id="username" name="username" class="form-input"
+                 placeholder="admin@gamedepot.com" value="admin@gamedepot.com" required autofocus>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Contraseña</label>
+          <input type="password" id="password" name="password" class="form-input"
+                 placeholder="Tu contraseña" value="admin123" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 10px;">
+          Ingresar al Panel Administrativo
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; padding: 14px; background: var(--bg-surface); border: 1px dashed var(--border); border-radius: var(--r-md); font-size: 12px; color: var(--text-2);">
+        <strong style="color: var(--accent);">Credenciales de prueba:</strong><br>
+        Usuario: <code style="color: var(--text-1);">admin@gamedepot.com</code><br>
+        Contraseña: <code style="color: var(--text-1);">admin123</code>
+      </div>
+    </div>
+
+    <aside class="auth-side" style="flex: 0.9;">
+      <h2 class="auth-side-title">Gestión Centralizada GameDepot</h2>
+      <div class="auth-side-item">
+        <span class="auth-side-check">—</span>
+        <span>Acceso protegido con Spring Security y hashing BCrypt</span>
+      </div>
+      <div class="auth-side-item">
+        <span class="auth-side-check">—</span>
+        <span>Administración completa de catálogo, imágenes y precios</span>
+      </div>
+      <div class="auth-side-item">
+        <span class="auth-side-check">—</span>
+        <span>Control de existencias con historial de movimientos y mermas</span>
+      </div>
+      <div class="auth-side-item">
+        <span class="auth-side-check">—</span>
+        <span>Dashboard con alertas de stock mínimo y órdenes en tiempo real</span>
+      </div>
+    </aside>
+  </div>
+</main>
+
+</body>
+</html>

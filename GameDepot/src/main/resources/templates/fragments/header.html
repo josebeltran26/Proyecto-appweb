@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <header class="admin-topbar" th:fragment="header(pageTitle)">
+    <div>
+      <h1 style="font-size: 20px; font-weight: 800; color: var(--text-1); letter-spacing: -0.5px;" th:text="${pageTitle}">
+        Panel de Administración
+      </h1>
+      <span style="font-size: 11px; color: var(--text-3);">GameDepot Core Admin Console</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span class="pill pill-success">
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--success); display: inline-block;"></span>
+        Nodo Activo
+      </span>
+      <div style="font-size: 12px; color: var(--text-3);" th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy HH:mm')}">
+        Fecha
+      </div>
+    </div>
+  </header>
+</body>
+</html>

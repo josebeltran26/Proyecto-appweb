@@ -1,0 +1,13 @@
+package com.gamedepot.admin.repository;
+
+import com.gamedepot.admin.model.ItemOrden;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ItemOrdenRepository extends JpaRepository<ItemOrden, Long> {
+
+    List<ItemOrden> findByOrdenId(Long ordenId);
+}

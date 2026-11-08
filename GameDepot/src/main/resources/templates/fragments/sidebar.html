@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+  <aside class="admin-sidebar" th:fragment="sidebar(activePage)">
+    <div class="sidebar-header">
+      <a th:href="@{/admin}" class="logo" style="text-decoration:none;">
+        <span class="logo-name">GameDepot</span>
+        <span class="logo-sub">ADMINISTRATION NODE</span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Principal</div>
+      <a th:href="@{/admin}" class="nav-item" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">
+        <span>Dashboard</span>
+      </a>
+
+      <div class="nav-section-title">Catálogo &amp; Stock</div>
+      <a th:href="@{/admin/videojuegos}" class="nav-item" th:classappend="${activePage == 'videojuegos'} ? 'active' : ''">
+        <span>Videojuegos</span>
+      </a>
+      <a th:href="@{/admin/categorias}" class="nav-item" th:classappend="${activePage == 'categorias'} ? 'active' : ''">
+        <span>Categorías</span>
+      </a>
+      <a th:href="@{/admin/inventario}" class="nav-item" th:classappend="${activePage == 'inventario'} ? 'active' : ''">
+        <span>Inventario &amp; Ajustes</span>
+      </a>
+
+      <div class="nav-section-title">Ventas &amp; Clientes</div>
+      <a th:href="@{/admin/ordenes}" class="nav-item" th:classappend="${activePage == 'ordenes'} ? 'active' : ''">
+        <span>Órdenes de Compra</span>
+      </a>
+      <a th:href="@{/admin/usuarios}" class="nav-item" th:classappend="${activePage == 'usuarios'} ? 'active' : ''">
+        <span>Usuarios / Clientes</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info-text" style="overflow: hidden; text-overflow: ellipsis; max-width: 150px;">
+        <span class="user-name" style="font-size: 12px;" sec:authentication="name">admin@gamedepot.com</span>
+        <span class="user-email" style="font-size: 10px; color: var(--accent);">ADMINISTRADOR</span>
+      </div>
+      <form th:action="@{/admin/logout}" method="post" style="margin: 0;">
+        <button type="submit" class="btn btn-secondary btn-sm" title="Cerrar Sesión" style="padding: 6px 10px; font-size: 11px;">
+          Salir
+        </button>
+      </form>
+    </div>
+  </aside>
+</body>
+</html>

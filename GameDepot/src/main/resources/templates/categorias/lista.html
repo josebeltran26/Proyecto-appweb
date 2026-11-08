@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Categorías')}"></head>
+<body>
+
+<div class="admin-layout">
+  <aside th:replace="~{fragments/sidebar :: sidebar('categorias')}"></aside>
+
+  <main class="admin-main">
+    <header th:replace="~{fragments/header :: header('Gestión de Categorías')}"></header>
+
+    <div class="admin-body">
+      <div th:replace="~{fragments/alerts :: alerts}"></div>
+
+      <div style="display: grid; grid-template-columns: 360px 1fr; gap: 24px; align-items: start;">
+
+        <!-- Tarjeta de Creación de Categoría -->
+        <div class="table-card" style="padding: 24px;">
+          <h2 style="font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: 6px;">
+            Nueva Categoría
+          </h2>
+          <p style="font-size: 12px; color: var(--text-3); margin-bottom: 20px;">
+            Agrega una clasificación al catálogo de juegos.
+          </p>
+
+          <form th:action="@{/admin/categorias}" th:object="${categoria}" method="post">
+            <div class="form-group">
+              <label class="form-label" for="nombre">Nombre de la Categoría *</label>
+              <input type="text" id="nombre" th:field="*{nombre}" class="form-input"
+                     placeholder="Ej. Terror Psicológico" required maxlength="80">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="descripcion">Descripción</label>
+              <textarea id="descripcion" th:field="*{descripcion}" class="form-textarea" rows="4"
+                        placeholder="Breve reseña sobre este género..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              + Registrar Categoría
+            </button>
+          </form>
+        </div>
+
+        <!-- Tabla de Categorías Registradas -->
+        <div class="table-card">
+          <div class="table-header">
+            <div>
+              <h2 style="font-size: 16px; font-weight: 700; color: var(--text-1);">Categorías Existentes</h2>
+              <p style="font-size: 12px; color: var(--text-3);" th:text="${#lists.size(categorias)} + ' categorías activas en catálogo'"></p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">ID</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Juegos</th>
+                  <th style="text-align: right;">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:if="${#lists.isEmpty(categorias)}">
+                  <td colspan="5" class="text-center text-muted" style="padding: 24px;">No hay categorías registradas.</td>
+                </tr>
+                <tr th:each="cat : ${categorias}">
+                  <td class="text-muted" th:text="'#' + ${cat.id}">#1</td>
+                  <td>
+                    <span class="fw-700" style="color: var(--text-1);" th:text="${cat.nombre}">Nombre</span>
+                  </td>
+                  <td style="max-width: 320px; color: var(--text-2);" th:text="${cat.descripcion ?: 'Sin descripción'}">Desc</td>
+                  <td>
+                    <span class="pill pill-neutral" th:text="${#lists.size(cat.videojuegos)} + ' asociados'">0 asociados</span>
+                  </td>
+                  <td style="text-align: right;">
+                    <div style="display: inline-flex; gap: 8px;">
+                      <a th:href="@{'/admin/categorias/' + ${cat.id} + '/editar'}" class="btn btn-secondary btn-sm">
+                        Editar
+                      </a>
+                      <form th:action="@{'/admin/categorias/' + ${cat.id} + '/eliminar'}" method="post"
+                            onsubmit="return confirm('¿Estás seguro de eliminar esta categoría? Si tiene videojuegos asociados la operación será rechazada.');"
+                            style="margin: 0; display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                          Eliminar
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

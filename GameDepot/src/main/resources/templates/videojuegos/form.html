@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head(${videojuego.id == null ? 'Nuevo Videojuego' : 'Editar Videojuego'})}"></head>
+<body>
+
+<div class="admin-layout">
+  <aside th:replace="~{fragments/sidebar :: sidebar('videojuegos')}"></aside>
+
+  <main class="admin-main">
+    <header th:replace="~{fragments/header :: header(${videojuego.id == null ? 'Registrar Nuevo Videojuego' : 'Editar Videojuego: ' + videojuego.nombre})}"></header>
+
+    <div class="admin-body" style="max-width: 900px;">
+      <div th:replace="~{fragments/alerts :: alerts}"></div>
+
+      <div class="table-card" style="padding: 32px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <div>
+            <h2 style="font-size: 18px; font-weight: 700; color: var(--text-1);"
+                th:text="${videojuego.id == null ? 'Datos del Videojuego' : 'Modificar Datos del Videojuego'}">
+              Datos del Videojuego
+            </h2>
+            <p style="font-size: 12px; color: var(--text-3);">
+              Configura los metadatos globales, clasificación de edad y categorías.
+            </p>
+          </div>
+          <a th:href="@{/admin/videojuegos}" class="btn btn-secondary btn-sm">&larr; Volver al catálogo</a>
+        </div>
+
+        <form th:action="${videojuego.id == null ? '/admin/videojuegos' : '/admin/videojuegos/' + videojuego.id + '/editar'}"
+              th:object="${videojuego}" method="post">
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label" for="nombre">Título del Videojuego *</label>
+              <input type="text" id="nombre" th:field="*{nombre}" class="form-input"
+                     placeholder="Ej. Cyberpunk 2077" required maxlength="150">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="clasificacionEdad">Clasificación ESRB *</label>
+              <select id="clasificacionEdad" th:field="*{clasificacionEdad}" class="form-select" required>
+                <option th:each="c : ${clasificaciones}"
+                        th:value="${c}"
+                        th:text="${c.name()} + ' — ' + ${c.descripcion}">
+                  E — Everyone
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="descripcion">Descripción / Sinopsis</label>
+            <textarea id="descripcion" th:field="*{descripcion}" class="form-textarea" rows="3"
+                      placeholder="Sinopsis detallada de la trama, características jugables..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="desarrollador">Desarrollador / Estudio</label>
+            <input type="text" id="desarrollador" th:field="*{desarrollador}" class="form-input"
+                   placeholder="Ej. FromSoftware, CD Projekt RED, Team Cherry">
+          </div>
+
+          <!-- SECCIÓN DE VARIANTE INICIAL OBLIGATORIA (AL CREAR UN NUEVO VIDEOJUEGO) -->
+          <div th:if="${videojuego.id == null}"
+               style="background: rgba(59, 130, 246, 0.05); border: 1px dashed var(--accent); border-radius: var(--r-md); padding: 20px; margin: 24px 0;">
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">
+              Edición Inicial (Plataforma + Formato + Precio + Stock)
+            </h3>
+            <p style="font-size: 11px; color: var(--text-2); margin-bottom: 16px;">
+              Cada juego debe contar al menos con una edición específica. Podrás agregar más plataformas luego.
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Plataforma *</label>
+                <select name="variantePlataforma" class="form-select" required>
+                  <option th:each="p : ${plataformas}" th:value="${p}" th:text="${p.etiqueta}">PC</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Formato de Distribución *</label>
+                <select name="varianteFormato" class="form-select" required>
+                  <option th:each="f : ${formatos}" th:value="${f}" th:text="${f.etiqueta}">DIGITAL</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Precio (MXN) *</label>
+                <input type="number" step="0.01" min="0" name="variantePrecio" value="899.00" class="form-input" required>
+              </div>
+
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Stock Inicial *</label>
+                <input type="number" min="0" name="varianteStock" value="10" class="form-input" required>
+              </div>
+
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Stock Mínimo Alerta *</label>
+                <input type="number" min="0" name="varianteStockMinimo" value="5" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label">Keys / Códigos Digitales (Opcional, uno por línea si es digital)</label>
+              <textarea name="varianteKeys" class="form-textarea" rows="2"
+                        placeholder="GD-XXXX-YYYY-ZZZZ&#10;GD-AAAA-BBBB-CCCC"></textarea>
+            </div>
+          </div>
+
+          <!-- Selección de Categorías -->
+          <div class="form-group" style="margin-top: 10px;">
+            <label class="form-label">Asignar Categorías</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; background: var(--bg-surface); padding: 14px; border: 1px solid var(--border); border-radius: var(--r-md);">
+              <label th:each="cat : ${todasCategorias}" style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-2); cursor: pointer;">
+                <input type="checkbox" name="categoriaIds" th:value="${cat.id}"
+                       th:checked="${videojuego.categorias != null and videojuego.categorias.contains(cat)}">
+                <span th:text="${cat.nombre}">Acción</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- URLs de Imágenes -->
+          <div class="form-group">
+            <label class="form-label" for="imageUrlsText">URLs de Imágenes (Una URL por línea)</label>
+            <textarea id="imageUrlsText" name="imageUrlsText" class="form-textarea" rows="2"
+                      placeholder="https://images.unsplash.com/... (La primera se usará como portada principal)"
+                      th:text="${imageUrlsText}"></textarea>
+          </div>
+
+          <!-- Publicación Activa -->
+          <div class="checkbox-group" style="margin: 20px 0;">
+            <input type="checkbox" id="activo" th:field="*{activo}">
+            <label for="activo" style="color: var(--text-1); font-weight: 600;">
+              Publicar videojuego en catálogo activo
+            </label>
+          </div>
+
+          <div style="display: flex; gap: 14px; margin-top: 28px;">
+            <button type="submit" class="btn btn-primary btn-lg" style="flex: 1;">
+              <span th:text="${videojuego.id == null ? 'Dar de Alta Videojuego y Edición' : 'Guardar Cambios'}">Guardar</span>
+            </button>
+            <a th:href="@{/admin/videojuegos}" class="btn btn-secondary btn-lg">Cancelar</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

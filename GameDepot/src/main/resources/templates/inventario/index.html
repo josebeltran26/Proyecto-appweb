@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Control de Inventario &amp; Kárdex')}"></head>
+<body>
+
+<div class="admin-layout">
+  <aside th:replace="~{fragments/sidebar :: sidebar('inventario')}"></aside>
+
+  <main class="admin-main">
+    <header th:replace="~{fragments/header :: header('Inventario &amp; Kárdex de Movimientos')}"></header>
+
+    <div class="admin-body">
+      <div th:replace="~{fragments/alerts :: alerts}"></div>
+
+      <!-- Formulario de Ajuste de Stock -->
+      <div class="table-card" style="padding: 24px; margin-bottom: 28px;">
+        <div style="margin-bottom: 18px;">
+          <h2 style="font-size: 16px; font-weight: 700; color: var(--text-1);">
+            Registrar Ajuste de Existencias por Edición
+          </h2>
+          <p style="font-size: 12px; color: var(--text-3);">
+            Aplica entradas por abastecimiento, salidas por merma/daño o corrección de conteo. Valida transaccionalmente que el stock nunca resulte negativo.
+          </p>
+        </div>
+
+        <form th:action="@{/admin/inventario/ajustar}" method="post">
+          <div style="display: grid; grid-template-columns: 2fr 1.5fr 1fr 2fr auto; gap: 14px; align-items: end;">
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" for="varianteId">Edición de Videojuego *</label>
+              <select id="varianteId" name="varianteId" class="form-select" required>
+                <option value="" disabled selected>-- Selecciona una edición --</option>
+                <option th:each="v : ${variantes}"
+                        th:value="${v.id}"
+                        th:text="${v.nombreCompleto} + ' (Stock: ' + ${v.stock} + ')'">
+                  Juego [PC - DIGITAL] (Stock: 10)
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" for="motivo">Motivo de Movimiento *</label>
+              <select id="motivo" name="motivo" class="form-select" required>
+                <option th:each="m : ${motivos}"
+                        th:value="${m}"
+                        th:text="${m.name()}">
+                  ABASTECIMIENTO
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" for="cantidad">Cantidad *</label>
+              <input type="number" id="cantidad" name="cantidad" class="form-input"
+                     placeholder="Ej. 5" required>
+            </div>
+
+            <div class="form-group" style="margin: 0;">
+              <label class="form-label" for="descripcion">Justificación / Motivo</label>
+              <input type="text" id="descripcion" name="descripcion" class="form-input"
+                     placeholder="Ej. Recepción de lote distribuidor #442">
+            </div>
+
+            <div>
+              <button type="submit" class="btn btn-primary" style="white-space: nowrap; height: 42px;">
+                + Aplicar Ajuste
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <details>
+              <summary style="font-size: 12px; color: var(--accent); cursor: pointer;">
+                + Agregar Licencias / Keys Digitales (Opcional si la edición es formato DIGITAL)
+              </summary>
+              <div style="margin-top: 8px;">
+                <textarea name="nuevasKeysText" class="form-textarea" rows="2"
+                          placeholder="GD-KEY1-AAAA-BBBB&#10;GD-KEY2-CCCC-DDDD (Una clave por línea)"></textarea>
+                <span class="fs-xs text-muted">Si ingresas claves, la cantidad se calculará por el número de claves válidas recibidas.</span>
+              </div>
+            </details>
+          </div>
+        </form>
+      </div>
+
+      <!-- Resumen Estado Actual del Stock por Variante -->
+      <div class="table-card">
+        <div class="table-header">
+          <div>
+            <h2 style="font-size: 16px; font-weight: 700; color: var(--text-1);">Estado Actual de Existencias por Edición</h2>
+            <p style="font-size: 12px; color: var(--text-3);">Nivel de inventario físico y licencias digitales disponibles</p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Videojuego</th>
+                <th>Plataforma</th>
+                <th>Formato</th>
+                <th>SKU</th>
+                <th>Stock Disponible</th>
+                <th>Stock Mínimo</th>
+                <th>Keys Disponibles</th>
+                <th>Diagnóstico</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="v : ${variantes}">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img th:src="${v.videojuego.imagenPrincipalUrl}" alt="Portada" class="table-thumb">
+                    <span class="fw-700" style="color: var(--text-1);" th:text="${v.videojuego.nombre}">Nombre</span>
+                  </div>
+                </td>
+                <td>
+                  <span class="pill pill-info" th:text="${v.plataforma.etiqueta}">PC</span>
+                </td>
+                <td>
+                  <span class="pill" th:classappend="${v.isDigital()} ? 'pill-purple' : 'pill-neutral'"
+                        th:text="${v.formato.name()}">DIGITAL</span>
+                </td>
+                <td class="text-muted" th:text="${v.sku}">SKU</td>
+                <td>
+                  <span style="font-size: 14px; font-weight: 700;"
+                        th:classappend="${v.stockBajo} ? 'text-danger' : 'text-success'"
+                        th:text="${v.stock} + ' un.'">
+                    10 un.
+                  </span>
+                </td>
+                <td th:text="${v.stockMinimo} + ' un.'">5 un.</td>
+                <td>
+                  <span th:if="${v.isDigital()}" style="font-weight: 700; color: var(--accent);"
+                        th:text="${v.keysDisponiblesCount} + ' keys'">
+                    3 keys
+                  </span>
+                  <span th:unless="${v.isDigital()}" class="text-muted fs-xs">
+                    N/A (Físico)
+                  </span>
+                </td>
+                <td>
+                  <span th:if="${v.stockBajo}" class="pill pill-danger">Stock Crítico</span>
+                  <span th:unless="${v.stockBajo}" class="pill pill-success">Abastecido</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Historial de Movimientos de Inventario (Kárdex) -->
+      <div class="table-card">
+        <div class="table-header">
+          <div>
+            <h2 style="font-size: 16px; font-weight: 700; color: var(--text-1);">
+              Historial de Movimientos de Inventario (Kárdex)
+            </h2>
+            <p style="font-size: 12px; color: var(--text-3);">
+              Registro inmutable de todas las entradas, salidas, mermas y ajustes
+            </p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fecha y Hora</th>
+                <th>Edición Afectada</th>
+                <th>Tipo de Movimiento</th>
+                <th>Cantidad Ajustada</th>
+                <th>Descripción / Justificación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:if="${#lists.isEmpty(movimientos)}">
+                <td colspan="5" class="text-center text-muted" style="padding: 24px;">No hay movimientos registrados.</td>
+              </tr>
+              <tr th:each="mov : ${movimientos}">
+                <td th:text="${#temporals.format(mov.fecha, 'dd/MM/yyyy HH:mm:ss')}">01/01/2026 12:00</td>
+                <td>
+                  <span class="fw-700" style="color: var(--text-1);" th:text="${mov.variante.nombreCompleto}">Juego [PC - DIGITAL]</span>
+                </td>
+                <td>
+                  <span th:if="${mov.motivo.name() == 'STOCK_INICIAL'}" class="pill pill-info">STOCK INICIAL</span>
+                  <span th:if="${mov.motivo.name() == 'ABASTECIMIENTO'}" class="pill pill-success">+ ABASTECIMIENTO</span>
+                  <span th:if="${mov.motivo.name() == 'MERMA'}" class="pill pill-danger">- MERMA</span>
+                  <span th:if="${mov.motivo.name() == 'CORRECCION'}" class="pill pill-warning">CORRECCION</span>
+                  <span th:if="${mov.motivo.name() == 'VENTA'}" class="pill pill-purple">VENTA</span>
+                </td>
+                <td>
+                  <span class="fw-700"
+                        th:classappend="${mov.cantidadAjustada > 0} ? 'text-success' : 'text-danger'"
+                        th:text="${(mov.cantidadAjustada > 0 ? '+' : '') + mov.cantidadAjustada}">
+                    +10
+                  </span>
+                </td>
+                <td style="color: var(--text-2);" th:text="${mov.descripcion}">Descripción</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

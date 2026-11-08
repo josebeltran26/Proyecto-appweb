@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Orden ' + ${orden.folio})}"></head>
+<body>
+
+<div class="admin-layout">
+  <aside th:replace="~{fragments/sidebar :: sidebar('ordenes')}"></aside>
+
+  <main class="admin-main">
+    <header th:replace="~{fragments/header :: header('Detalle de Orden: ' + ${orden.folio})}"></header>
+
+    <div class="admin-body">
+      <div th:replace="~{fragments/alerts :: alerts}"></div>
+
+      <!-- Barra Superior -->
+      <div class="table-card" style="padding: 20px 24px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <a th:href="@{/admin/ordenes}" class="btn btn-secondary btn-sm" style="margin-bottom: 8px;">
+              &larr; Volver al listado
+            </a>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <h2 style="font-size: 20px; font-weight: 800; color: var(--text-1);" th:text="${orden.folio}">ORD-000</h2>
+              <span th:if="${orden.estado.name() == 'PENDIENTE'}" class="pill pill-warning">PENDIENTE</span>
+              <span th:if="${orden.estado.name() == 'PROCESANDO'}" class="pill pill-info">PROCESANDO</span>
+              <span th:if="${orden.estado.name() == 'ENVIADO'}" class="pill pill-purple">ENVIADO</span>
+              <span th:if="${orden.estado.name() == 'ENTREGADO'}" class="pill pill-success">ENTREGADO</span>
+              <span th:if="${orden.estado.name() == 'CANCELADO'}" class="pill pill-danger">CANCELADO</span>
+            </div>
+            <div class="fs-xs text-muted" th:text="'Fecha de creación: ' + ${#temporals.format(orden.fecha, 'dd/MM/yyyy HH:mm:ss')}">01/01/2026</div>
+          </div>
+
+          <!-- Formulario Cambio de Estado -->
+          <form th:action="@{'/admin/ordenes/' + ${orden.id} + '/estado'}" method="post"
+                style="display: flex; align-items: center; gap: 10px; background: var(--bg-surface); padding: 12px 18px; border-radius: var(--r-md); border: 1px solid var(--border);">
+            <label class="form-label" style="margin: 0; font-size: 12px; white-space: nowrap;">Cambiar Estado:</label>
+            <select name="estado" class="form-select" style="width: auto; padding: 6px 12px; font-size: 12px;">
+              <option th:each="est : ${estados}"
+                      th:value="${est}"
+                      th:text="${est}"
+                      th:selected="${est == orden.estado}">
+                PENDIENTE
+              </option>
+            </select>
+            <button type="submit" class="btn btn-primary btn-sm">
+              Actualizar Estado
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; align-items: start;">
+
+        <!-- Artículos de la Orden -->
+        <div class="table-card">
+          <div class="table-header">
+            <h3 style="font-size: 15px; font-weight: 700; color: var(--text-1);">Ediciones y Licencias Adquiridas</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Edición / Formato</th>
+                  <th>Precio Unitario</th>
+                  <th>Cant</th>
+                  <th>Descuento</th>
+                  <th style="text-align: right;">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="item : ${orden.items}">
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img th:src="${item.variante.videojuego.imagenPrincipalUrl}" alt="Portada" class="table-thumb">
+                      <div>
+                        <div class="fw-700" style="color: var(--text-1);" th:text="${item.variante.videojuego.nombre}">Nombre</div>
+                        <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                          <span class="pill pill-info" style="font-size: 10px;" th:text="${item.variante.plataforma.etiqueta}">PC</span>
+                          <span class="pill" th:classappend="${item.variante.isDigital()} ? 'pill-purple' : 'pill-neutral'" style="font-size: 10px;"
+                                th:text="${item.variante.formato.name()}">DIGITAL</span>
+                        </div>
+
+                        <!-- Licencia Digital Asignada (si aplica) -->
+                        <div th:if="${item.variante.isDigital()}" style="margin-top: 6px;">
+                          <div th:if="${item.keyAsignada != null}" style="background: rgba(16, 185, 129, 0.1); border: 1px dashed var(--success); padding: 4px 8px; border-radius: var(--r-sm); font-size: 11px;">
+                            <span style="color: var(--success); font-weight: 700;">Licencia Asignada:</span>
+                            <code style="color: var(--text-1); font-weight: 700;" th:text="${item.keyAsignada.codigo}">XXXX-YYYY-ZZZZ</code>
+                          </div>
+                          <div th:unless="${item.keyAsignada != null}" class="fs-xs text-muted">
+                            Clave digital en espera de asignación (al pasar a Procesando/Enviado).
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td th:text="'$' + ${#numbers.formatDecimal(item.precioUnitario, 1, 'COMMA', 2, 'POINT')}">$0.00</td>
+                  <td>
+                    <span class="pill pill-neutral" th:text="${item.cantidad}">1</span>
+                  </td>
+                  <td th:text="'$' + ${#numbers.formatDecimal(item.descuento, 1, 'COMMA', 2, 'POINT')}">$0.00</td>
+                  <td style="text-align: right;">
+                    <span class="fw-700 text-success" th:text="'$' + ${#numbers.formatDecimal(item.subtotal, 1, 'COMMA', 2, 'POINT')}">$0.00</span>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4" style="text-align: right; font-weight: 700; color: var(--text-1); padding: 16px 20px;">
+                    TOTAL FINAL CALCULADO:
+                  </td>
+                  <td style="text-align: right; font-weight: 800; font-size: 18px; color: var(--success); padding: 16px 20px;">
+                    <span th:text="'$' + ${#numbers.formatDecimal(orden.total, 1, 'COMMA', 2, 'POINT')}">$0.00</span>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Panel Lateral: Cliente, Envío y Pago -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+
+          <!-- Datos del Comprador -->
+          <div class="table-card" style="padding: 20px;">
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+              Datos del Cliente
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+              <div>
+                <span class="text-muted fs-xs">Nombre:</span>
+                <div class="fw-600" style="color: var(--text-1);" th:text="${orden.usuario.nombre}">Nombre</div>
+              </div>
+              <div>
+                <span class="text-muted fs-xs">Correo Electrónico:</span>
+                <div style="color: var(--accent);" th:text="${orden.usuario.email}">email@example.com</div>
+              </div>
+              <div>
+                <span class="text-muted fs-xs">Teléfono:</span>
+                <div style="color: var(--text-1);" th:text="${orden.usuario.telefono ?: 'No registrado'}">6621234567</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información de Envío / Paquetería -->
+          <div class="table-card" style="padding: 20px;">
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+              Logística de Envío
+            </h3>
+
+            <!-- Caso 100% Digital -->
+            <div th:unless="${orden.requiereEnvio()}" style="background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: var(--r-md); padding: 12px; font-size: 12px; color: #c4b5fd;">
+              <strong>Orden 100% Digital:</strong> Esta orden contiene exclusivamente claves de activación digital. No requiere dirección física ni envío por paquetería.
+            </div>
+
+            <!-- Caso Físico (Lleva Envío) -->
+            <div th:if="${orden.requiereEnvio()}">
+              <div style="margin-bottom: 12px; font-size: 12px;">
+                <span class="text-muted fs-xs">Dirección de Entrega:</span>
+                <div style="color: var(--text-1); font-weight: 500;"
+                     th:text="${orden.direccionEntrega != null ? orden.direccionEntrega.direccionCompleta : 'Sin dirección asignada'}">
+                  Calle #123, Hermosillo, Sonora
+                </div>
+              </div>
+
+              <div th:if="${orden.envio != null}" style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; background: var(--bg-surface); padding: 12px; border-radius: var(--r-md); border: 1px solid var(--border); margin-bottom: 12px;">
+                <div>
+                  <span class="text-muted fs-xs">Paquetería:</span>
+                  <strong style="color: var(--text-1);" th:text="${orden.envio.paqueteria ?: 'Pendiente'}">DHL</strong>
+                </div>
+                <div>
+                  <span class="text-muted fs-xs">Número de Guía:</span>
+                  <code style="color: var(--accent); font-weight: 700;" th:text="${orden.envio.numeroGuia ?: 'Sin guía'}">DHL-123456</code>
+                </div>
+                <div>
+                  <span class="text-muted fs-xs">Estado Envío:</span>
+                  <span class="pill pill-info" style="font-size: 10px;" th:text="${orden.envio.estadoEnvio.etiqueta}">En tránsito</span>
+                </div>
+                <div th:if="${orden.envio.fechaEntregaEstimada != null}">
+                  <span class="text-muted fs-xs">Entrega Estimada:</span>
+                  <span th:text="${#temporals.format(orden.envio.fechaEntregaEstimada, 'dd/MM/yyyy')}">01/01/2026</span>
+                </div>
+              </div>
+
+              <!-- Formulario para asignar/actualizar guía -->
+              <details>
+                <summary style="font-size: 12px; color: var(--accent); cursor: pointer; margin-bottom: 8px;">
+                  Modificar Guía de Envío
+                </summary>
+                <form th:action="@{'/admin/ordenes/' + ${orden.id} + '/envio'}" method="post" style="margin-top: 8px;">
+                  <div class="form-group" style="margin-bottom: 8px;">
+                    <label class="form-label" style="font-size: 11px;">Paquetería</label>
+                    <input type="text" name="paqueteria" class="form-input" placeholder="Ej. DHL Express, FedEx, Estafeta"
+                           th:value="${orden.envio != null ? orden.envio.paqueteria : 'DHL Express'}" required style="font-size: 12px; padding: 6px;">
+                  </div>
+                  <div class="form-group" style="margin-bottom: 8px;">
+                    <label class="form-label" style="font-size: 11px;">Número de Guía / Tracking</label>
+                    <input type="text" name="numeroGuia" class="form-input" placeholder="Ej. DHL-8839201"
+                           th:value="${orden.envio != null ? orden.envio.numeroGuia : ''}" required style="font-size: 12px; padding: 6px;">
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block btn-sm">Guardar Guía</button>
+                </form>
+              </details>
+            </div>
+          </div>
+
+          <!-- Comprobante de Pago -->
+          <div class="table-card" style="padding: 20px;">
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+              Detalle de Pago
+            </h3>
+            <div th:if="${orden.pago != null}" style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+              <div>
+                <span class="text-muted fs-xs">Método:</span>
+                <div class="fw-700" style="color: var(--text-1);" th:text="${orden.pago.metodoPago}">TARJETA</div>
+              </div>
+              <div>
+                <span class="text-muted fs-xs">Estado:</span>
+                <div>
+                  <span th:if="${orden.pago.estadoPago.name() == 'APROBADO'}" class="pill pill-success">APROBADO</span>
+                  <span th:if="${orden.pago.estadoPago.name() == 'PENDIENTE'}" class="pill pill-warning">PENDIENTE</span>
+                  <span th:if="${orden.pago.estadoPago.name() == 'RECHAZADO'}" class="pill pill-danger">RECHAZADO</span>
+                </div>
+              </div>
+              <div>
+                <span class="text-muted fs-xs">Monto Total Pagado:</span>
+                <div class="fw-700 text-success" th:text="'$' + ${#numbers.formatDecimal(orden.pago.monto, 1, 'COMMA', 2, 'POINT')}">$0.00</div>
+              </div>
+            </div>
+            <div th:unless="${orden.pago != null}" class="text-muted fs-sm">
+              Sin información de pago registrada.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

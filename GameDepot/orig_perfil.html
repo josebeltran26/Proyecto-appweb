@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameDepot — Perfil de Usuario y Bóveda</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="header-row-1">
+    <a href="catalogo.html" class="logo">
+      <span class="logo-name">GameDepot</span>
+      <span class="logo-sub">KEY DISTRIBUTION NODE</span>
+    </a>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar claves de Steam, Xbox, Epic, PSN...">
+    </div>
+    <div class="user-area">
+      <div class="balance-badge">
+        <span class="balance-label">SALDO</span>
+        <span class="balance-amount">$42.50 MXN</span>
+      </div>
+      <a href="carrito.html" class="cart-icon" title="Ver carrito">
+        🛒
+        <span class="cart-badge">2</span>
+      </a>
+      <a href="perfil.html" class="user-profile">
+        <div class="user-avatar">JL</div>
+        <div class="user-info-text">
+          <span class="user-name">Jesus Luzanilla</span>
+          <span class="user-email">jesus.luzanilla@example.com</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <nav class="platform-nav">
+    <a href="catalogo.html" class="platform-link active">STEAM</a>
+    <a href="catalogo.html" class="platform-link">XBOX</a>
+    <a href="catalogo.html" class="platform-link">PLAYSTATION</a>
+    <a href="catalogo.html" class="platform-link">EPIC</a>
+    <a href="catalogo.html" class="platform-link">GOG</a>
+    <a href="catalogo.html" class="platform-link">NINTENDO</a>
+  </nav>
+</header>
+
+<main class="screen">
+  <div class="profile-layout">
+    <aside class="profile-sidebar">
+      <nav class="profile-menu">
+        <a class="profile-menu-item" href="#resumen">📊 Resumen</a>
+        <a class="profile-menu-item active" href="#boveda">🔑 Mis licencias (Bóveda)</a>
+        <a class="profile-menu-item" href="#pedidos">📦 Pedidos recientes</a>
+        <a class="profile-menu-item" href="#favoritos">❤️ Favoritos</a>
+        <a class="profile-menu-item" href="#cuenta">👤 Datos de cuenta</a>
+        <a class="profile-menu-item" href="#seguridad">🔒 Seguridad</a>
+        <a class="profile-menu-item danger" href="login.html">🚪 Cerrar sesión</a>
+      </nav>
+    </aside>
+
+    <section class="profile-content">
+      <div class="profile-header-card">
+        <div class="profile-avatar-lg">JL</div>
+        <div class="profile-user-info">
+          <h1 class="profile-user-name">Jesus Luzanilla</h1>
+          <p class="profile-user-email">jesus.luzanilla@example.com</p>
+          <div class="profile-user-badges">
+            <span class="badge badge-info">Miembro desde 2024</span>
+            <span class="badge badge-verified">🔐 Bóveda Criptográfica SHA-256</span>
+            <span class="badge badge-verified">✓ Verificado</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="boveda" class="detail-block">
+        <h2 class="detail-block-title">🔑 Mi Bóveda de Licencias</h2>
+
+        <article class="license-card">
+          <div class="license-img"></div>
+          <div class="license-info">
+            <h3 class="license-title">Apex Phantom Elite: Zero</h3>
+            <p class="license-platform">Steam Key · Global</p>
+            <p class="license-key">APEX-9821-XFK9-4412</p>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <span class="license-status ready">● Listo para canjear</span>
+            <button type="button" class="btn btn-secondary btn-sm">📋 Copiar</button>
+          </div>
+        </article>
+
+        <article class="license-card">
+          <div class="license-img"></div>
+          <div class="license-info">
+            <h3 class="license-title">Cyberpunk Odyssey 2077</h3>
+            <p class="license-platform">Epic Games Key · Global</p>
+            <p class="license-key">CYBER-2077-O78X-99B2</p>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <span class="license-status redeemed">● Canjeado con Éxito</span>
+            <button type="button" class="btn btn-secondary btn-sm">📋 Copiar</button>
+          </div>
+        </article>
+
+        <article class="license-card">
+          <div class="license-img"></div>
+          <div class="license-info">
+            <h3 class="license-title">Dark Horizon: Abyss Chronicle</h3>
+            <p class="license-platform">GOG DRM-Free · Global</p>
+            <p class="license-key">DARK-HZ01-ABY5-7710</p>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <span class="license-status ready">● Listo para canjear</span>
+            <button type="button" class="btn btn-secondary btn-sm">📋 Copiar</button>
+          </div>
+        </article>
+      </div>
+
+      <div id="pedidos" class="detail-block">
+        <h2 class="detail-block-title">📦 Pedidos recientes</h2>
+        <div style="overflow-x:auto">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Pedido</th>
+                <th>Fecha</th>
+                <th>Artículos</th>
+                <th>Método</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>#GD-240318</strong></td>
+                <td>08 oct 2026</td>
+                <td>2 claves</td>
+                <td>Visa (...8892)</td>
+                <td><strong>$63.50 MXN</strong></td>
+                <td><span class="badge badge-status-delivered">Entregado</span></td>
+                <td><button type="button" class="btn btn-ghost btn-sm">Recibo</button></td>
+              </tr>
+              <tr>
+                <td><strong>#GD-240310</strong></td>
+                <td>01 oct 2026</td>
+                <td>1 clave</td>
+                <td>PayPal</td>
+                <td><strong>$19.99 MXN</strong></td>
+                <td><span class="badge badge-status-delivered">Entregado</span></td>
+                <td><button type="button" class="btn btn-ghost btn-sm">Recibo</button></td>
+              </tr>
+              <tr>
+                <td><strong>#GD-240295</strong></td>
+                <td>22 sep 2026</td>
+                <td>3 claves</td>
+                <td>Visa (...8892)</td>
+                <td><strong>$87.40 MXN</strong></td>
+                <td><span class="badge badge-status-delivered">Entregado</span></td>
+                <td><button type="button" class="btn btn-ghost btn-sm">Recibo</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="seguridad" class="detail-block">
+        <h2 class="detail-block-title">🔒 Seguridad</h2>
+
+        <div class="security-item">
+          <div class="security-info">
+            <h3 class="security-title">Autenticación en dos fases (2FA)</h3>
+            <p class="security-desc">Protege tu cuenta con un código adicional al iniciar sesión</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="security-item">
+          <div class="security-info">
+            <h3 class="security-title">Alertas de inicio de sesión</h3>
+            <p class="security-desc">Recibe una notificación por correo cuando se detecte un nuevo acceso</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div style="margin-top:20px">
+          <button type="button" class="btn btn-secondary">🔑 Cambiar contraseña</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+</body>
+</html>

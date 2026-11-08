@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Órdenes de Compra')}"></head>
+<body>
+
+<div class="admin-layout">
+  <aside th:replace="~{fragments/sidebar :: sidebar('ordenes')}"></aside>
+
+  <main class="admin-main">
+    <header th:replace="~{fragments/header :: header('Gestión de Órdenes')}"></header>
+
+    <div class="admin-body">
+      <div th:replace="~{fragments/alerts :: alerts}"></div>
+
+      <!-- Filtros por Estado -->
+      <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+        <a th:href="@{/admin/ordenes}" class="btn btn-sm"
+           th:classappend="${estadoSeleccionado == null} ? 'btn-primary' : 'btn-secondary'">
+          Todas las Órdenes
+        </a>
+        <a th:each="est : ${estados}"
+           th:href="@{/admin/ordenes(estado=${est})}"
+           class="btn btn-sm"
+           th:classappend="${estadoSeleccionado == est} ? 'btn-primary' : 'btn-secondary'"
+           th:text="${est}">
+          PENDIENTE
+        </a>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div>
+            <h2 style="font-size: 16px; font-weight: 700; color: var(--text-1);">Listado de Pedidos</h2>
+            <p style="font-size: 12px; color: var(--text-3);" th:text="${#lists.size(ordenes)} + ' órdenes encontradas'"></p>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Folio</th>
+                <th>Cliente</th>
+                <th>Modalidad</th>
+                <th>Fecha</th>
+                <th>Monto Total</th>
+                <th>Estado</th>
+                <th style="text-align: right;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:if="${#lists.isEmpty(ordenes)}">
+                <td colspan="7" class="text-center text-muted" style="padding: 24px;">No hay órdenes para mostrar con este filtro.</td>
+              </tr>
+              <tr th:each="orden : ${ordenes}">
+                <td>
+                  <span class="fw-700" style="color: var(--accent);" th:text="${orden.folio}">ORD-000</span>
+                </td>
+                <td>
+                  <div class="fw-600" style="color: var(--text-1);" th:text="${orden.usuario.nombre}">Cliente</div>
+                  <div class="fs-xs text-muted" th:text="${orden.usuario.email}">email</div>
+                </td>
+                <td>
+                  <span th:if="${orden.requiereEnvio()}" class="pill pill-info">Físico (Envío)</span>
+                  <span th:unless="${orden.requiereEnvio()}" class="pill pill-purple">Digital (Key)</span>
+                </td>
+                <td th:text="${#temporals.format(orden.fecha, 'dd/MM/yyyy HH:mm')}">01/01/2026</td>
+                <td>
+                  <span class="fw-700 text-success" th:text="'$' + ${#numbers.formatDecimal(orden.total, 1, 'COMMA', 2, 'POINT')}">$0.00</span>
+                </td>
+                <td>
+                  <span th:if="${orden.estado.name() == 'PENDIENTE'}" class="pill pill-warning">PENDIENTE</span>
+                  <span th:if="${orden.estado.name() == 'PROCESANDO'}" class="pill pill-info">PROCESANDO</span>
+                  <span th:if="${orden.estado.name() == 'ENVIADO'}" class="pill pill-purple">ENVIADO</span>
+                  <span th:if="${orden.estado.name() == 'ENTREGADO'}" class="pill pill-success">ENTREGADO</span>
+                  <span th:if="${orden.estado.name() == 'CANCELADO'}" class="pill pill-danger">CANCELADO</span>
+                </td>
+                <td style="text-align: right;">
+                  <a th:href="@{'/admin/ordenes/' + ${orden.id}}" class="btn btn-secondary btn-sm">
+                    Inspeccionar
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
